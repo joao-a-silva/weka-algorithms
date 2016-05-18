@@ -1,0 +1,217 @@
+1; 8; HP Officejet J3680 All-in-One - multifunction ( fax / copier / Scanner )
+1; 18; Hewlett-Packard - HP Officejet J3680 All-in-One
+2; 28; Multifunction Office Machines: HP Officejet J4580 All-in-One
+2; 38; HP / Hewlett-Packard OfficeJet J4580 All-in-One Printer CB780A
+2; 48; HP Officejet J4580 All-in-One Inkjet Printer, Fax, Scanner, Copier
+4; 58; Officejet J6480 All-In-One Printer, Fax, Scanner, Copier
+4; 68; HP Hardware - OfficeJet J6480 All-in-One
+5; 78; Hp Officejet 6310 All-in-one Printer-fax-scanner-copier
+5; 88; Officejet 6310 Multifunction Printer Model: Q8061AABA Hewlett
+6; 98; HP Officejet Pro L7590 (CB821A) All-in-One Printer
+7; 108; C8189A#ABA: HP Officejet Pro L7680 Color All-in-One Printer, Fax, Scanner, Copier
+7; 118; HP OJ PRO L7680
+8; 128; HP Hewlett Packard C8184A#A2L Officejet Pro K5400 Inkjet Printer
+9; 138; HP Hewlett Packard C9277A#A2L ?model Officejet Pro K5400DTN Inkjet
+10; 148; Ink-jet - HP Officejet Pro K8600 Color Printer
+11; 158; HP Officejet Pro 8000 - Printer - color - duplex - ink-jet - Legal
+11; 168; HEWLETT PACKARD INKJET AND SCANNER CB092A#B1H HP Officejet Pro 8000
+12; 178; HP Officejet Pro 8000 Wireless Network-Ready Printer
+12; 188; HP Officejet Pro 8000 Color Inkjet Printer - Wireless C9297A#B1H
+13; 198; HEWLETT PACKARD INKJET AND SCANNER HP Officejet 6500 All-in-One
+14; 208; HP Officejet 6500 Wireless All-in-One Printer CB057A#B1H
+15; 218; HP Officejet H470 Mobile Printer
+15; 228; HP Officejet H470 Mobile Printer - printer - color - ink-jet
+16; 238; HEWQ8388A Photosmart C4480 All-in-One Inkjet Printer, Scanner, copier
+16; 248; Photosmart C4480 All-in-One Inkjet Printer, Scanner, Copier
+16; 258; HEWQ8388A HP Photosmart C4480 All-in-One Printer Q8388A Hewlett-Packard
+17; 268; Ink-jet - HP Photosmart C4580 All-in-One Printer
+18; 278; HP Photosmart C5580 All In One Printer / Copier / Scanner - Full Kit
+18; 288; Q8341A - HP Photosmart C5580 All-in-One - Multifunction ( printer / copier / scanner )
+19; 298; HEWCD028A HP? Photosmart C6
+20; 308; Hp Photosmart C8180 Inkjet MFP Printer
+21; 318; Hp Photosmart C7280 All-in-One Multifunction color ink-jet copying up
+22; 328; HP Photosmart Premium Wireless Fax All-in-One Printer, Scanner, Copier
+23; 338; HP PHOTOSMART C4680 ALL-IN-ONE COLOR INKJET PRINTER - UP TO 4800
+23; 348; Photosmart C4680 All-in-One
+25; 358; HP HP PhotoSmart D5460 - Printer - Color - Ink-jet (T19199)
+25; 368; Photosmart D5460 Printer from HP Hardware / Office Products
+26; 378; Hewlett Packard HP Q8441A#B1H Photosmart D7560 Photo Printer
+26; 388; HP Photosmart D7560 InkJet Printer - 64MB RAM - Up to 33 ppm
+27; 398; HP / Hewlett-Packard Photosmart A536 Printer Q8624A
+27; 408; Photosmart A536 Compact Photo
+28; 418; Hp Photosmart A636 Compact Photo Printer In Box
+29; 428; Hewlett Packard - HP HP PHOTOSMART A826 HOME PHOTO CENTER
+29; 438; HP [Q8550A] Photosmart A826 Photo InkJet Printer (Priced Per EACH)
+30; 448; HP Photosmart B8550 Wide Format Printer
+30; 458; PHOTOSMART B8550 PHOTO PRINTER 4X6 1200DPI USB US/CA ENG FR e SPA
+31; 468; HEWCB410A HP HP LaserJet P1005 Printer Model: CB410A#ABA Hewlett
+31; 478; CB410A#ABA HP LaserJet P1005 Printer
+32; 488; HP LaserJet P1006 Printer - CB411A#ABA Mono Laser Printer
+32; 498; HP LaserJet P1006 - printer - B/W - laser
+33; 508; HEWCB412A - HP LaserJet P1505 Printer
+33; 518; HP - LaserJet P1505 Printer, HEWCB412A
+34; 528; HP LaserJet P2035 30ppm 1200dpi Laser Printer - CE461A#ABA
+34; 538; Hewlett Packard HP LaserJet P2035 (CE461A) Printer
+35; 548; HEWCB413A HP LaserJet P1505n Printer Model: CB413A#ABA Hewlett-Packard
+36; 558; HP LaserJet P2035n Workgroup Monochrome Laser Printer
+36; 568; HP LaserJet P2035n (CE462A) Printer
+36; 578; HP HP-P2035N LASERJET P2035N PRINTER
+37; 588; CE460A#201 - HP LaserJet P2055x - Printer - B/W - duplex - laser
+38; 598; HP LaserJet P2055dn - printer - B/W - laser
+38; 608; LaserJet P2055dn printer
+39; 618; HP LaserJet P3005 Printer (Q7812A)
+40; 628; HP LaserJet P3005D Printer - Monochrome Laser - 35 ppm Mono
+41; 638; HP LaserJet P3005n Printer
+41; 648; HP LaserJet P3005N Printer - Monochrome Laser - 35 ppm Mono - Fast
+42; 658; HP LaserJet P3005dn Monochrome Laser Printer Q7815A#ABA
+42; 668; HP Laserjet P3005DN Printer Gov 110V.UP To 35 Ppm Up To 1200X1200
+43; 678; Hewlett Packard Q7816A, HP LaserJet P3005x Multifunction Printer
+43; 688; HP LaserJet P3005x Monochrome Printer
+44; 698; HP LaserJet P4014N Printer - Monochrome Laser - 45 ppm Mono - 1200
+44; 708; HP LASERJET P4014N PRINTER US - ENGLISH LOCALIZATION
+45; 718; 901732 HP LaserJet P4015x printer, 500-sheet input tray
+45; 728; HP LaserJet P4515n Printer (CB514A#ABA)
+45; 738; HP LaserJet P4515N Monochrome Laser Printer 1200dpi 62ppm Usb CB514
+46; 748; Hewlett Packard HP LaserJet M1319f MFP (CB536A#ABA) All-in-1 Printer
+46; 758; Hewlett-Packard - HP LaserJet M1319f MFP
+47; 768; HP LaserJet M1522n MFP Printer
+48; 778; HP HP LaserJet M1522nf MFP - Multifunction (B/W) - Laser (34288J)
+49; 788; Genuine HP LaserJet M2727NF MFP Doc Feeder Part
+49; 798; HP LaserJet M2727nf MFP Printer
+50; 808; CC479A#BCC HP LaserJet M3027x MFP
+51; 818; 128MB PC-2100 100-pin DDR DIMM - HP OEM Q2626A RAM for HP LaserJet
+52; 828; HP LaserJet M3035xs MFP B/W Laser - Fax / copier / printer / scanner
+52; 838; HP LaserJet M3035xs MFP - multifunction ( B/W )
+53; 848; Laser - B/W - HP LaserJet 5200tn Printer
+54; 858; Hp, Q7546aaba Laserjet 5200dtn Laser B/w Printer
+54; 868; Canon Q7546A - HP LaserJet 5200dtn Printer (Q7546A) Up to 35 ppm
+55; 878; HEWLETT PACKARD / HP HP COLOR LASERJET CP1518NI PRINTER, HP COLOR
+56; 888; HP Color LaserJet CP1215 Color Laser printer - 12 ppm - 150 pages
+56; 898; HP COLOR LASERJET CP1215 PRINTER - LASER 600 X 600 DPI 25 000
+57; 908; HP Color LaserJet CP2025n printer
+57; 918; Hewlett Packard CB494A, HP CP2025n Color LaserJet Printer
+57; 928; HP COLOR LASERJET CP2025N NETWORK PRINTER - LASER 600 X 600 DPI 40
+58; 938; HP Color LaserJet CP2025x - printer - color - laser
+59; 948; HP Color LaserJet CP2025dn Workgroup Color Laser Printer
+59; 958; HP Color LaserJet CP2025dn Color Laser Printer (CB495A)
+60; 968; HEWCB442A LaserJet CP3505N Color Printer by Hp
+61; 978; HP COLOR LASERJET CP3525N NETWORK PRINTER - LASER 600 X 600 DPI 75
+62; 988; HP Color LaserJet CP3525dn Workgroup Color Laser Printer
+63; 998; HP Color LaserJet CP6015dn - printer - color - laser
+63; 1008; HP LaserJet CP6015DN Laser Printer 3932A#ABA
+64; 1018; HP Color LaserJet CM1312nfi MFP - Multifunction Fax / Copier
+65; 1028; HP Color LaserJet CM2320n MFP
+65; 1038; laserjetcm2320nmfp
+66; 1048; Hewlett Packard Cc436A No. Aba Hp Color Laserjet Cm2320Nf Mfp
+66; 1058; laserjetcm2320nf-mfp
+68; 1068; HP COLOR LASERJET CM3530 MFP Up to 31 ppm, HP ImageREt 3600
+69; 1078; HP Color LaserJet CM3530fs MFP Printer
+70; 1088; HEWLETT PACKARD HP COLOR LASERJET 4700DN PRINTER, MEXICO. 31PPM
+71; 1098; HP Color LaserJet 5550n printer from HEWLETT PACKARD / Office
+72; 1108; HP Color LaserJet 5550dn Laser Printer
+73; 1118; HP Deskjet 6988 Color Ink-jet printer - 36 ppm - 150 sheets
+73; 1128; HP Deskjet 6988 Color Inkjet Printer
+73; 1138; HEWCB055A, HP Deskjet 6988 Printer, HEW CB055A
+74; 1148; Deskjet 6940 Network-Ready Color Inkjet Printer, HEWC8970A
+74; 1158; C8970A#B1H HP Deskjet 6940 - Printer - color - ink-jet - Legal, A4 - 1
+75; 1168; CH366A#B1H : HP Deskjet D2660 Printer : TMPR103
+76; 1178; HP Deskjet D4360 Printer
+76; 1188; HP DESKJET D4360 INKJET PRINTER CB700A#B1H
+76; 1198; Deskjet D4360 Printer
+77; 1208; Multifunction Office Machines: HP DeskJet F4280 All-in-One Inkjet
+77; 1218; HP Deskjet F4280 All-in-One - multifunction ( printer / copier / scanner )
+77; 1228; HP Deskjet F4280 Multifunction Printer - Color Inkjet - 26 ppm
+78; 1238; HP Designjet 110plus Large Format Printer
+79; 1248; PRINTER, HP DESIGNJET 110 PLUS NR
+80; 1258; DesignJet 130 Color Wide Format
+81; 1268; Ink-jet - HP Designjet 130nr Printer
+81; 1278; HP [C7791F] Designjet 130nr Inkjet Photo Printer (Priced Per EACH)
+84; 1288; HP Business InkJet-2800DTN Ink
+84; 1298; Ink-jet - HP Business Inkjet 2800dtn printer
+85; 1308; EPSON ARTISAN 50 COLOR INK JET PRINTER
+86; 1318; Wholesale Epson Workforce 30 - Color Inkjet Printer (Item:EPSWF30)
+87; 1328; Epson WorkForce 40 - printer - color - ink-jet - 100 sheets
+88; 1338; Epson Epson Stylus C88+ Ink Jet Printer - C11c617121
+88; 1348; Stylus C88+ - printer - color - ink-jet
+89; 1358; Epson Stylus 1400 Inkjet Photo Printer - Color Inkjet - 46 Second
+90; 1368; Epson Stylus Photo R280 Inkjet Printer - Color, Monochrome - Ink-jet
+91; 1378; Epson Stylus Photo R1900 - printer - color - ink-jet
+91; 1388; Epson Stylus R1900 Photo Printer - Color Inkjet - 44 Second Photo
+92; 1398; Epson? EPSC11CA16201 Stylus Photo R2880 Inkjet Printer
+93; 1408; Epson B-300 Color Business Ink Jet Printer
+95; 1418; Epson Artisan 700 All In One Printer Toner Included
+95; 1428; Epson America Inc - Artisan 700 All-In-One Printer
+96; 1438; EPSON artisan 800 all in one color printer/scanner/copier/fax 38ppm 14
+96; 1448; Epson Artisan 800 All-in-One Inkjet Printer
+97; 1458; Epson WorkForce 310 All-in-One Printer
+98; 1468; Epson WorkForce 500 All-in-One Color Inkjet Printer
+98; 1478; Epson WorkForce 500 Multifunction Printer
+99; 1488; Epson WorkForce 600 Color Ink-jet - Fax / copier / printer / scanner
+99; 1498; Epson Workforce 600 All In One Printer C11ca18201
+100; 1508; Epson Stylus NX100 All-in-One Printer
+102; 1518; Epson Stylus Nx200 All-in-one Photo Printer W/cable
+103; 1528; PRINTER, STYLUS NX215, ALL-IN-ONE
+104; 1538; Epson Stylus NX300 All In One Printer NX 300 CA17201
+104; 1548; NX300 All-In-One Printer
+105; 1558; Epson Stylus NX400 All-in-One Inkjet Color Printer (Print - Copy - Scanner)
+105; 1568; Epson Stylus Nx400 All-in-one Inkjet Printer W/ Ink
+107; 1578; Epson Stylus NX515 All-in-One Printer
+108; 1588; Epson Stylus Photo Rx680 Cd/dvd All-in-one Printer
+109; 1598; Epson Stylus Cx-7400 All-in-one Inkjet Printer
+110; 1608; EPSC11C696201 Stylus CX9400Fax All-In-One Color Inkjet Printer by Epson
+110; 1618; Epson Stylus Cx9400fax Color All-in-one Photo Printer
+112; 1628; Dell All-in-One Printer V305 Color Ink-jet - Printer / copier / scanner
+114; 1638; Dell All-in-One Printer V505w (PRODUCT) RED Color Ink-jet - Fax / Copier / Scanner
+117; 1648; Dell 968 Wireless All-In-One Inkjet Printer
+120; 1658; Dell 3115cn Multifunction Color Laser Printer All In 1
+122; 1668; Canon Pixma Ip2600 Color Photo Inkjet Printer
+122; 1678; Canon PIXMA iP2600 Inkjet Photo Printer
+123; 1688; Canon PIXMA iP100 Photo Printer 1446B002 IP100 IP-100
+123; 1698; Canon 1446B002 Pixma iP100 9600 x 2400 dpi Inkjet Color Photo Printer
+124; 1708; Canon PIXMA iP3600 Inkjet Printer Pictbridge Colour 17ppm Mono
+125; 1718; Canon Pixma MP190 All-In-One Photo Printer (2910B002)
+125; 1728; Canon Pixma Mp190 Color Inkjet Photo All-in-one
+126; 1738; Kodak ESP 7 All-in-One Printer
+127; 1748; MFC-465CN(1071) BROTHER INTL CORP MFC-465CN P/C/S/F PHOTO COL 25/30PPM
+128; 1758; Brother Mfc-790cw Color Inkjet All-in-one With Wide 4.2
+128; 1768; BROTHER [MFC790CW] MFC-790CW Wireless Color AiO Inkjet Peripheral
+130; 1778; Brother MFC-9440CN Color Laser Multifunction Printer
+130; 1788; Brother MFC-9440CN Color Laser Fax, Copier, Printer, Scanner w/Network
+131; 1798; Brother International DCP-7030 Laser Multi-Function Copier
+132; 1808; Lexmark X2600 All in One Printer: Copy, Scan, e Print
+132; 1818; X2600 All-In-One
+134; 1828; Lexmark X5650 Inkjet All-in-One Printer
+135; 1838; Lexmark X6675 WLS AIO 18/25PPM-B/G P/C/S
+135; 1848; Ink-jet - Lexmark X6675 Wireless All in One
+136; 1858; Lexmark X543dn
+137; 1868; LEXMARK X544n MFC / All-In-One Color Laser Printer
+138; 1878; Lexmark - Lexmark X544dw Multifunction Color Duplex Laser Printer
+138; 1888; X544dw Color Laser MFP - 220 Instant Savings (reflected in price)
+139; 1898; Lexmark X544DTN Government Compliant Multifunction Printer - 26C0330
+139; 1908; 26C0330 : Lexmark X544DTN Government Compliant Multifunction
+140; 1918; Lexmark X782E HV Color Multifunction 40/33ppm Laser Printer
+140; 1928; 21J0429, X782E MULTIFUNCTION PRINTER - COLOR - LASER - COPY,PRINT
+141; 1938; Multifunction Office Machines: Lexmark X945E Multifunction Laser
+141; 1948; Lexmark Laser X945e Multi-Function Printer (45ppm black/40ppm)
+142; 1958; LEXMARK 26S0285 X2670 ALL IN ONE INKJETPR P/S/C 13PPM MASS VERSION
+142; 1968; LEXMARK 26S0000 X2670 ALL IN ONE INKJETPR P/S/C 13PPM RTL VERSION
+143; 1978; X4650 Color Inkjet All In One
+143; 1988; Lexmark X4650 wireless 3-in-1
+144; 1998; Lexmark X4975 Professional Wireless 3-in-1 with Duplex
+145; 2008; X5075 Professional Color Inkjet All-In-One Printer
+145; 2018; X5075 MF All-In-One Color Inkjet (PN: 11N1500) by Lexmark International
+146; 2028; X6650 All-In-One
+147; 2038; Lexmark X7675 Buy 2 Get 1 Free Bundle. Professional Wireless 4-in-1
+148; 2048; Lexmark X9575 Professional Wireless All-In-One Color InkJet Printer
+148; 2058; Lexmark X9575 Inkjet All-In-One With Photo Features
+149; 2068; Lexmark - Inkjet Printer Z2300
+150; 2078; Lexmark Z2420 Wireless Color Printer
+152; 2088; Lexmark X264DN Compact Monochrome Multifunction Laser Printer
+152; 2098; LEXMARK 13B0500 X264DN MLTFUNCMONO SMALL WKGP MONO LASER
+153; 2108; Lexmark X363DN Multifunction Laser Printer - 13B0501
+153; 2118; X363dn Monochrome Laser Multifunction Printer - Network-ready
+153; 2128; Lexmark 13B0501 X363DN Multifunction Printer
+154; 2138; SASCLX3175FN Samsung CLX-3175FN Multifunction Laser Printer
+155; 2148; SASCLX6200FX CLX-6200FX Color Laser Printer/Copier/Scanner/Fax by Samsung
+156; 2158; Xerox Xerox Phaser 6110MFP/X multifunction Laser color
+
