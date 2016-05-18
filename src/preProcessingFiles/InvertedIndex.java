@@ -21,7 +21,7 @@ import java.util.TreeSet;
  *
  * @author joaoasilva
  */
-public class Cosine {
+public class InvertedIndex {
 
     private Map<Integer, Double> hashTokens = new HashMap<Integer, Double>();
     private Map<String, Integer> indexTokens = new HashMap<String, Integer>();

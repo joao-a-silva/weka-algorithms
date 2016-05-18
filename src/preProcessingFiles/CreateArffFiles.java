@@ -23,9 +23,9 @@ import java.util.TreeSet;
  */
 public class CreateArffFiles {
 
-    private Cosine cosine;
+    private InvertedIndex cosine;
 
-    public CreateArffFiles(Cosine cosine) {
+    public CreateArffFiles(InvertedIndex cosine) {
         this.cosine = cosine;
     }
 
@@ -61,7 +61,7 @@ public class CreateArffFiles {
         out.close();
     }
 
-    private String generateHeader(Cosine cosine) {
+    private String generateHeader(InvertedIndex cosine) {
 //        System.out.println("numTokens" + hashTokensMapeados.size());
         StringBuilder out = new StringBuilder();
 
@@ -74,7 +74,7 @@ public class CreateArffFiles {
         return out.toString();
     }
 
-    private String generateClasses(Cosine cosine) {
+    private String generateClasses(InvertedIndex cosine) {
 //        System.out.println("numClasses" + hashClassesMapeadas.size());
         StringBuilder out = new StringBuilder();
 
@@ -92,7 +92,7 @@ public class CreateArffFiles {
 
     }
 
-    private String generateLineFile(Entity entity, Cosine cosseno, boolean train) throws IOException {
+    private String generateLineFile(Entity entity, InvertedIndex cosseno, boolean train) throws IOException {
 
         PreProcessingInstancias preProcessing = new PreProcessingInstancias();
 
@@ -138,7 +138,7 @@ public class CreateArffFiles {
 
     }
 
-    private String generateLineFile2(Entity entity, Cosine cosseno, boolean train) throws IOException {
+    private String generateLineFile2(Entity entity, InvertedIndex cosseno, boolean train) throws IOException {
 
         PreProcessingInstancias preProcessing = new PreProcessingInstancias();
 
@@ -188,7 +188,7 @@ public class CreateArffFiles {
 
     }
 
-    private String generateHeader3(Cosine cosine) {
+    private String generateHeader3(InvertedIndex cosine) {
 //        System.out.println("numTokens" + hashTokensMapeados.size());
         StringBuilder out = new StringBuilder();
 
@@ -201,7 +201,7 @@ public class CreateArffFiles {
         return out.toString();
     }
 
-    private String generateLineFile3(Entity entity, Cosine cosseno, boolean train) throws IOException {
+    private String generateLineFile3(Entity entity, InvertedIndex cosseno, boolean train) throws IOException {
 
         PreProcessingInstancias preProcessing = new PreProcessingInstancias();
 
@@ -257,7 +257,7 @@ public class CreateArffFiles {
 
     }
 
-    private String generateHeader2(Cosine cosine) {
+    private String generateHeader2(InvertedIndex cosine) {
 //        System.out.println("numTokens" + hashTokensMapeados.size());
         StringBuilder out = new StringBuilder();
 
