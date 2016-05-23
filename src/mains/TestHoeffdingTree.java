@@ -18,6 +18,21 @@ public class TestHoeffdingTree {
 		leaner.setModelContext(stream.getHeader());
 		leaner.prepareForUse();
 
+		int numberSamplesCorrect = 0;
+		int numberSamples = 0;
+		boolean isTesting = True;
+		while(stream.hasMoreInstances() && numberSamples < numInstances){
+			Instance trainInst = stream.nextInstance();
+			if(isTesting){
+				if(leaner.correctlyClassifiers(trainInst)){
+					numberSamplesCorrect++;
+				}
+			}
+			numberSamples++;
+			leaner.trainOnInstance(trainInst);
+		}
+		double accuracy = 100.0*(double) numberSamplesCorrect/(double) numberSamples;
+		System.out.println(numberSamples + " instances processed with " + accuracy + "% accuracy");
 	}
 
 }
