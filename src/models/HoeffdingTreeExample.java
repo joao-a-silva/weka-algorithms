@@ -1,8 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package preProcessingFiles;
+package models;
+
+import moa.classifiers.Classifier;
+import moa.classifiers.trees.HoeffdingTree;
+import weka.classifiers.evaluation.Evaluation;
+import weka.core.Instance;
+import weka.core.Instances;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,32 +13,17 @@ import java.util.Arrays;
 import java.util.Date;
 
 import utils.DateTime;
-import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
-import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.lazy.IBk;
-import weka.classifiers.trees.RandomForest;
-import weka.core.Instances;
-import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.Standardize;
 
-
-/**
- *
- * @author claudiane
- */
-public class WekaAlgs {
-
-    private double[] metrics;
+public class HoeffdingTreeExample {
+	private double[] metrics;
     private int numTrees;
 
-    public WekaAlgs(int numTrees) {
+    public HoeffdingTreeExample(int numTrees) {
         metrics = new double[2];
         this.numTrees = numTrees;
-
     }
 
-    public void wekaClassifiers(String pathTrain, String pathTest, String alg, int numTokens, int numLevels) throws IOException, Exception {
+    public void HTClassifiers(String pathTrain, String pathTest, int numTokens, int numLevels) throws IOException, Exception {
         System.out.println("Features: "+ numTokens);
         
         BufferedReader br = null;
@@ -55,48 +42,23 @@ public class WekaAlgs {
         br.close();
 
         //MOA m = new MOA();
-        Classifier clf = null;
+        Classifier clf = new HoeffdingTree();
+        System.out.println("Num tokens " + numTokens);
+        int k = (int) ((Math.log(numTokens) / Math.log(2)) + 1);
+        System.out.println("k " + k);
+        HoeffdingTree hf = new HoeffdingTree();
+        hf.setNumTrees(this.numTrees);
 
-        switch (alg) {
-
-            case "rf":
-                clf = new RandomForest();
-                System.out.println("Num tokens " + numTokens);
-                int k = (int) ((Math.log(numTokens) / Math.log(2)) + 1);
-                System.out.println("k " + k);
-                RandomForest rf = new RandomForest();
-                rf.setNumTrees(this.numTrees);
-
-                if (numLevels != 0) {
-                    System.out.println("NumLevels: " + numLevels);
-                    rf.setMaxDepth(numLevels);
-                }
-
-                break;
-            
-            case "nb":
-                
-                clf = new NaiveBayes();
-                break;
-            
-            
-            case "knn":
-                clf = new IBk();        
-                
-                
-
+        if (numLevels != 0) {
+            System.out.println("NumLevels: " + numLevels);
+            hf.setMaxDepth(numLevels);
         }
-
-        
-        NaiveBayes nb = new NaiveBayes();
-        //nb.setOptions(new String[]{"-O"});
-        System.out.println(" ## "+ Arrays.toString(nb.getOptions()) );
-        
+       
         
 //        rf.setNumFeatures(1000);
         try {
             dt.getInitialTime();
-            nb.buildClassifier(trainData);
+            hf.trainOnInstanceImpl(trainData);
             dt.getEndTime();
             System.out.println("Training Time: "+ dt.getStepTime());
         } catch (Exception e) {
@@ -125,7 +87,7 @@ public class WekaAlgs {
 
         try {
             dt.getInitialTime();
-            evaluation.evaluateModel(nb, testData);
+            evaluation.evaluateModel(hf, testData);
             dt.getEndTime();
             System.out.println("Test Time: "+ dt.getStepTime());
             
@@ -154,5 +116,4 @@ public class WekaAlgs {
     public void setMetrics(double[] metrics) {
         this.metrics = metrics;
     }
-
 }
