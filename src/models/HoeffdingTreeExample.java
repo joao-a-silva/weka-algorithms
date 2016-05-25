@@ -3,7 +3,6 @@ package models;
 import moa.classifiers.Classifier;
 import moa.classifiers.trees.HoeffdingTree;
 import weka.classifiers.evaluation.Evaluation;
-import weka.core.Instance;
 import weka.core.Instances;
 
 import java.io.BufferedReader;
@@ -11,6 +10,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+
+import com.yahoo.labs.samoa.instances.Instance;
+//import com.yahoo.labs.samoa.instances.Instances;
 
 import utils.DateTime;
 
@@ -31,7 +33,7 @@ public class HoeffdingTreeExample {
 
         DateTime dt = new DateTime();
         dt.getDate();
-        br = new BufferedReader(new FileReader(pathTrain));
+        br = new BufferedReader(new FileReader(pathTrain));   //substituir por moa.streams.ArffFileStream.ArffFileStream()
         Instances trainData = new Instances(br);
         trainData.setClassIndex(trainData.numAttributes() - 1);
         br.close();
@@ -47,18 +49,20 @@ public class HoeffdingTreeExample {
         int k = (int) ((Math.log(numTokens) / Math.log(2)) + 1);
         System.out.println("k " + k);
         HoeffdingTree hf = new HoeffdingTree();
-        hf.setNumTrees(this.numTrees);
+        /*hf.setNumTrees(this.numTrees);
 
         if (numLevels != 0) {
             System.out.println("NumLevels: " + numLevels);
             hf.setMaxDepth(numLevels);
-        }
+        }*/
        
         
 //        rf.setNumFeatures(1000);
         try {
             dt.getInitialTime();
-            hf.trainOnInstanceImpl(trainData);
+            for(Instance instance : trainData){
+            	hf.trainOnInstanceImpl(instance);
+            }
             dt.getEndTime();
             System.out.println("Training Time: "+ dt.getStepTime());
         } catch (Exception e) {
