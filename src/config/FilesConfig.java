@@ -17,6 +17,7 @@ public class FilesConfig {
      * *************************************************************************
      */
 //    Com codigo
+<<<<<<< HEAD
     //public static String IMPUT_XML = "files/xmlDados/testeCross/comCodigo/10-Produtos_Com_Codigo-Fold-";
    // public static String IMPUT_CLASSIFIER = "files/imput/comCodigo/10-Produtos_Com_Codigo-Fold-";
 //    sem codigo
@@ -26,6 +27,16 @@ public class FilesConfig {
 	//     printers
       //public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
       public static String IMPUT_CLASSIFIER = "files/datasets/printers/17-Printers-Fold-";
+=======
+    public static String IMPUT_XML = "files/xmlDados/testeCross/comCodigo/10-Produtos_Com_Codigo-Fold-";
+    public static String IMPUT_CLASSIFIER = "files/imput/comCodigo/10-Produtos_Com_Codigo-Fold-";
+//    sem codigo
+//    public static String IMPUT_XML = "files/xmlDados/testeCross/semcodigo/14-Produtos-Sem-Codigos-Fold-";
+//    public static String IMPUT_CLASSIFIER = "files/imput/semcodigo/14-Produtos-Sem-Codigos-Fold-";
+//     printers
+//    public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
+//    public static String IMPUT_CLASSIFIER = "files/imput/printers/17-Printers-Fold-";
+>>>>>>> 27db306e72a67d8dabf6c2fe6cef82c61db4dfc1
     
 //       //books
 //    public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
@@ -79,8 +90,13 @@ public class FilesConfig {
      ***************************************************************************
      */
     
+<<<<<<< HEAD
     public static String W_TRAIN = "files/datasets/weka/training";
     public static String W_TEST = "files/datasets/weka/test";
+=======
+    public static String W_TRAIN = "files/imput/weka/train";
+    public static String W_TEST = "files/imput/weka/test";
+>>>>>>> 27db306e72a67d8dabf6c2fe6cef82c61db4dfc1
     
      /* *************************************************************************
      * Arquivos JavaMl
