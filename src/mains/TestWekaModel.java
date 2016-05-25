@@ -25,12 +25,12 @@ import config.FilesConfig;
  *
  * @author joao
  */
-public class TestWeka {
+public class TestWekaModel {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, SAXException, Exception {
+	public static void main(String[] args) throws FileNotFoundException, IOException, SAXException, Exception {
         // TODO code application logic here
 
     	int numFolds = 10;
@@ -81,17 +81,7 @@ public class TestWeka {
             /**********************************************************************************************************
              ********************************* Inserir aqui o modelo ************************************************** 
              **********************************************************************************************************/
-            WekaAlgs weka = new WekaAlgs();       
-            dt.getInitialTime();
-            weka.wekaClassifiers(FilesConfig.W_TRAIN+".arff", FilesConfig.W_TEST+".arff", "nf", 0, 0);
-            dt.getEndTime();
-            dt.getStepTime();
-            
-            metrics[0] += weka.getMetrics()[0];
-            metrics[1] += weka.getMetrics()[1];
-            time[0] += weka.getTime()[0];
-            time[1] += weka.getTime()[1];
-            
+                       
             
             /********************************************************************************************************** 
              ***********************************************************************************************************/

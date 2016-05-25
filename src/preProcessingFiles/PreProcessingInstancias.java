@@ -22,7 +22,7 @@ public class PreProcessingInstancias {
 
     public PreProcessingInstancias() throws IOException {
         StopWords sw = new StopWords();
-        this.stopWords = sw.getStopWords("stopwords.txt");
+        this.stopWords = sw.getStopWords("files/stopwords.txt");
     }
 
     /*

@@ -27,108 +27,55 @@ import weka.filters.unsupervised.attribute.Standardize;
  */
 public class WekaAlgs {
 
-    private double[] metrics;
-    private int numTrees;
+    private double[] metrics, time;
 
-    public WekaAlgs(int numTrees) {
+
+    public WekaAlgs() {
         metrics = new double[2];
-        this.numTrees = numTrees;
-
+        time = new double[2];
     }
 
     public void wekaClassifiers(String pathTrain, String pathTest, String alg, int numTokens, int numLevels) throws IOException, Exception {
-        System.out.println("Features: "+ numTokens);
-        
-        BufferedReader br = null;
-        int numFolds = 10;
-
         DateTime dt = new DateTime();
+        BufferedReader br = null;
+
         dt.getDate();
+        //load the train data
         br = new BufferedReader(new FileReader(pathTrain));
         Instances trainData = new Instances(br);
         trainData.setClassIndex(trainData.numAttributes() - 1);
         br.close();
-
+        
+        //load the test data
         br = new BufferedReader(new FileReader(pathTest));
         Instances testData = new Instances(br);
         testData.setClassIndex(testData.numAttributes() - 1);
         br.close();
-
-        //MOA m = new MOA();
-        Classifier clf = null;
-
-        switch (alg) {
-
-            case "rf":
-                clf = new RandomForest();
-                System.out.println("Num tokens " + numTokens);
-                int k = (int) ((Math.log(numTokens) / Math.log(2)) + 1);
-                System.out.println("k " + k);
-                RandomForest rf = new RandomForest();
-                rf.setNumTrees(this.numTrees);
-
-                if (numLevels != 0) {
-                    System.out.println("NumLevels: " + numLevels);
-                    rf.setMaxDepth(numLevels);
-                }
-
-                break;
-            
-            case "nb":
-                
-                clf = new NaiveBayes();
-                break;
-            
-            
-            case "knn":
-                clf = new IBk();        
-                
-                
-
-        }
-
-        
+      
+        //Instance the classifier
         NaiveBayes nb = new NaiveBayes();
-        //nb.setOptions(new String[]{"-O"});
-        System.out.println(" ## "+ Arrays.toString(nb.getOptions()) );
-        
-        
-//        rf.setNumFeatures(1000);
+
+        //Train the model
         try {
             dt.getInitialTime();
             nb.buildClassifier(trainData);
             dt.getEndTime();
+            this.time[0] = dt.getStepTime();
             System.out.println("Training Time: "+ dt.getStepTime());
+            
         } catch (Exception e) {
             System.out.println("Can't create the classifier!");
         }
-        
-        
-//        
-//        for (int i = 0; i < testData.size(); i++) {
-//            dt.getInitialTime();
-//            System.out.println(i+" -> "+nb.classifyInstance(testData.get(i)));
-//            dt.getEndTime();
-//            System.out.println("Time: "+ dt.getStepTime());
-//        }
-////        
-        System.out.println("");
-        
-        
 
-//               System.out.println(rf.getTechnicalInformation()
-//               );
-//        System.out.println("Trees: "+ rf.getNumTrees());
-//        System.out.println("Featutes "+rf.getNumFeatures());
-        //  System.out.println(Arrays.toString(clf.getOptions()));
+        //Test and evaluate the model
         Evaluation evaluation = new Evaluation(trainData);
 
         try {
             dt.getInitialTime();
             evaluation.evaluateModel(nb, testData);
             dt.getEndTime();
-            System.out.println("Test Time: "+ dt.getStepTime());
-            
+            this.time[1] = dt.getStepTime();
+            System.out.println("Test Time: "+ dt.getStepTime());            
             System.out.println("\nMicroF1=  " + evaluation.unweightedMicroFmeasure());
             System.out.println("MicroF1=  " + evaluation.unweightedMacroFmeasure());
 
@@ -138,13 +85,6 @@ public class WekaAlgs {
         } catch (Exception e) {
             System.out.println("Can't evaluate the model!");
         }
-
-        
-        
-        
-       
-        
-//        
     }
 
     public double[] getMetrics() {
@@ -154,5 +94,15 @@ public class WekaAlgs {
     public void setMetrics(double[] metrics) {
         this.metrics = metrics;
     }
+    
+    public double[] getTime() {
+        return metrics;
+    }
+
+    public void setTime(double[] metrics) {
+        this.metrics = metrics;
+    }
+    
+    
 
 }
