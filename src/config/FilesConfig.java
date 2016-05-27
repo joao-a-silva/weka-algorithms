@@ -26,13 +26,22 @@ public class FilesConfig {
 
 	//     printers
       //public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
+<<<<<<< HEAD
     //  public static String IMPUT_CLASSIFIER = "files/datasets/printers/17-Printers-Fold-";
+=======
+      //public static String IMPUT_CLASSIFIER = "files/datasets/printers/17-Printers-Fold-";
+>>>>>>> da18b3f705342dd1c41ec89171e58d1ceb72230c
 
      // public static String IMPUT_XML = "files/xmlDados/testeCross/comCodigo/10-Produtos_Com_Codigo-Fold-";
      // public static String IMPUT_CLASSIFIER = "files/imput/comCodigo/10-Produtos_Com_Codigo-Fold-";
 //    sem codigo
+<<<<<<< HEAD
 //    public static String IMPUT_XML = "files/xmlDados/testeCross/semcodigo/14-Produtos-Sem-Codigos-Fold-";
     public static String IMPUT_CLASSIFIER = "files/imput/semcodigo/14-Produtos-Sem-Codigos-Fold-";
+=======
+  //    public static String IMPUT_XML = "files/xmlDados/testeCross/semcodigo/14-Produtos-Sem-Codigos-Fold-";
+      public static String IMPUT_CLASSIFIER = "files/datasets/uolNonEletronic/14-Produtos-Sem-Codigos-Fold-";
+>>>>>>> da18b3f705342dd1c41ec89171e58d1ceb72230c
 //     printers
 //    public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
 //    public static String IMPUT_CLASSIFIER = "files/imput/printers/17-Printers-Fold-";
