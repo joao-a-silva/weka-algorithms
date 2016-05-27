@@ -26,13 +26,13 @@ public class FilesConfig {
 
 	//     printers
       //public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
-      public static String IMPUT_CLASSIFIER = "files/datasets/printers/17-Printers-Fold-";
+    //  public static String IMPUT_CLASSIFIER = "files/datasets/printers/17-Printers-Fold-";
 
      // public static String IMPUT_XML = "files/xmlDados/testeCross/comCodigo/10-Produtos_Com_Codigo-Fold-";
      // public static String IMPUT_CLASSIFIER = "files/imput/comCodigo/10-Produtos_Com_Codigo-Fold-";
 //    sem codigo
 //    public static String IMPUT_XML = "files/xmlDados/testeCross/semcodigo/14-Produtos-Sem-Codigos-Fold-";
-//    public static String IMPUT_CLASSIFIER = "files/imput/semcodigo/14-Produtos-Sem-Codigos-Fold-";
+    public static String IMPUT_CLASSIFIER = "files/imput/semcodigo/14-Produtos-Sem-Codigos-Fold-";
 //     printers
 //    public static String IMPUT_XML = "files/xmlDados/testeCross/printers/17-Printers-Fold-";
 //    public static String IMPUT_CLASSIFIER = "files/imput/printers/17-Printers-Fold-";
