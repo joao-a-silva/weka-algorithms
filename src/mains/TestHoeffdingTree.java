@@ -1,6 +1,9 @@
 package mains;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.xml.sax.SAXException;
 
 import config.FilesConfig;
 import models.Entity;
@@ -18,69 +21,21 @@ public class TestHoeffdingTree {
 
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
-		int numTrees = Integer.parseInt(args[2]);
-        int numLevesl = Integer.parseInt(args[3]);
-        
-        switch (args[1]) {
-            
-            case "-a":
-                main(new String[] {args[0],"-p", args[2], args[3]});
-                main(new String[] {args[0],"-e", args[2], args[3]});
-                main(new String[] {args[0],"-ne", args[2], args[3]});
-                main(new String[] {args[0],"-b", args[2], args[3]});
-                break;
-
-            case "-p":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/printers/17-Printers-Fold-";
-
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-
-            case "-e":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/comCodigo/10-Produtos_Com_Codigo-Fold-";
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-
-            case "-ne":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/semcodigo/14-Produtos-Sem-Codigos-Fold-";
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-                
-                
-                case "-b":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/books/15-Livros-Fold-";
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-        }
-
+		int numFolds = 10;
+        double[] metrics = new double[]{0,0};
+        double[] time = new double[]{0,0};
         
         
-        int numFolds = 10;
-        double[] metrics = new double[2];
-        metrics[0] = 0.0;
-        metrics[1] = 0.0;
-
         DateTime dt = new DateTime();
         dt.getDate();
-
-        dt.getInitialTime();
-       // PreProcessingFiles ppf = new PreProcessingFiles();
-
         //obtém os dados de treino e teste para cada fold
+        dt.getInitialTime();
         CrossValidation cv = new CrossValidation();
-
-        for (int i = 0; i < numFolds; i++) {
-            System.out.println("Carregando Arquivos Fold " + i);
-            cv.readFiles(FilesConfig.IMPUT_CLASSIFIER, i + 1);
-        }
-
+        cv.readFiles(FilesConfig.IMPUT_CLASSIFIER, 10);
         dt.getEndTime();
         System.out.println("##### Tempo leitura Arquivos: " + dt.getStepTime());
 
@@ -98,47 +53,43 @@ public class TestHoeffdingTree {
             ArrayList<Entity> dataTest = (ArrayList<Entity>) cv.getTest(i);
             System.out.println("Intancias Teste: " + dataTest.size());
 
-            // Gera o modelo de treino com o SVM
+            // Indexa o treino para salvar o arquivo .arff
             dt.getInitialTime();
-            InvertedIndex cj = new InvertedIndex();
-            cj.insertInvertedFile(dataTrain);
-//            cj.insertInvertedFile(test);
-            cj.atualizaHashIdf();
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.insertInvertedFile(dataTrain);
+            invertedIndex.atualizaHashIdf();
+            dt.getEndTime();
+            System.out.println("Tempo Indexação: " + dt.getStepTime());
 
-            caf = new CreateArffFiles(cj);
-
+            // Cria os arquivos de treino e teste para o fold i     
+            dt.getInitialTime();
+            caf = new CreateArffFiles(invertedIndex);
             caf.criarArquivoArff(dataTrain, 0, FilesConfig.W_TRAIN, true);
             caf.criarArquivoArff(dataTest, 0, FilesConfig.W_TEST, false);
-
-            HoeffdingTreeExample hf = new HoeffdingTreeExample(numTrees);
-
-            hf.HTClassifiers(FilesConfig.W_TRAIN + ".arff", FilesConfig.W_TEST + ".arff", cj.getNumTokens(), numLevesl);
-
-            metrics[0] += hf.getMetrics()[0];
-            metrics[1] += hf.getMetrics()[1];
-
-//            svm.trainLibLinear(FilesConfig.SVM_TREINO+i+".arff");
             dt.getEndTime();
+            System.out.println("Tempo criação arquivos weka: " + dt.getStepTime());
             
-            System.out.println("##### Tempo Treinamento RF:  " + dt.getStepTime());
-            dt.getTimeFold();
+            
+            /**********************************************************************************************************
+             ********************************* Inserir aqui o modelo ************************************************** 
+             **********************************************************************************************************/
+            HoeffdingTreeExample hf = new HoeffdingTreeExample();
 
- 
-
+            hf.HTClassifiers(FilesConfig.W_TRAIN + ".arff", FilesConfig.W_TEST + ".arff", invertedIndex.getNumTokens());
+            
+            /********************************************************************************************************** 
+             ***********************************************************************************************************/
+            
+            System.out.println("##### Tempo Fold:  " + (dt.getTimeFold()));
         }
 
         System.out.println("<>---------------------------------------------------<>");
-        System.out.println("MicroF1: " + metrics[0] / 10);
-        System.out.println("MacroF1: " + metrics[1] / 10);
+        System.out.println(" Media MicroF1: " + metrics[0] / 10);
+        System.out.println("Media MacroF1: " + metrics[1] / 10);
+        System.out.println("Media Tempo Treino: " + time[0] / 10);
+        System.out.println("Media Tempo Teste: " + time[1] / 10);
 
         System.out.println("##### Tempo Total: " + dt.getTotalTime());
-        
-        
-        FilesJ fj = new FilesJ();       
-        fj.appendFile("files/evaluation/weka/metricsTime", metrics[0]/10+", "+metrics[1]/10+", "+ dt.getTotalTime()+"\n");
-        
-        
-
 //        System.out.println(out.toString());
 	}
 

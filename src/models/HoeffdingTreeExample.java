@@ -2,8 +2,9 @@ package models;
 
 import moa.classifiers.Classifier;
 import moa.classifiers.trees.HoeffdingTree;
+import moa.streams.ArffFileStream;
 import weka.classifiers.evaluation.Evaluation;
-import weka.core.Instances;
+//import weka.core.Instances;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,34 +15,27 @@ import java.util.Date;
 import com.yahoo.labs.samoa.instances.Instance;
 //import com.yahoo.labs.samoa.instances.Instances;
 
+import config.FilesConfig;
 import utils.DateTime;
 
 public class HoeffdingTreeExample {
 	private double[] metrics;
     private int numTrees;
 
-    public HoeffdingTreeExample(int numTrees) {
+    public HoeffdingTreeExample() {
         metrics = new double[2];
-        this.numTrees = numTrees;
     }
-
-    public void HTClassifiers(String pathTrain, String pathTest, int numTokens, int numLevels) throws IOException, Exception {
+    
+    public void HTClassifiers(String pathTrain, String pathTest, int numTokens) throws IOException, Exception {
         System.out.println("Features: "+ numTokens);
         
-        BufferedReader br = null;
         int numFolds = 10;
+        int classindex = -1;   //-1 -> last attribute in file
 
         DateTime dt = new DateTime();
         dt.getDate();
-        br = new BufferedReader(new FileReader(pathTrain));   //substituir por moa.streams.ArffFileStream.ArffFileStream()
-        Instances trainData = new Instances(br);
-        trainData.setClassIndex(trainData.numAttributes() - 1);
-        br.close();
-
-        br = new BufferedReader(new FileReader(pathTest));
-        Instances testData = new Instances(br);
-        testData.setClassIndex(testData.numAttributes() - 1);
-        br.close();
+        ArffFileStream afs_train = new ArffFileStream(pathTrain, classindex);
+        ArffFileStream afs_test = new ArffFileStream(pathTest, classindex);
 
         //MOA m = new MOA();
         Classifier clf = new HoeffdingTree();
@@ -60,8 +54,8 @@ public class HoeffdingTreeExample {
 //        rf.setNumFeatures(1000);
         try {
             dt.getInitialTime();
-            for(Instance instance : trainData){
-            	hf.trainOnInstanceImpl(instance);
+            while(afs_train.hasMoreInstances()){
+            	hf.trainOnInstanceImpl((Instance) afs_train.nextInstance());
             }
             dt.getEndTime();
             System.out.println("Training Time: "+ dt.getStepTime());
@@ -87,7 +81,7 @@ public class HoeffdingTreeExample {
 //        System.out.println("Trees: "+ rf.getNumTrees());
 //        System.out.println("Featutes "+rf.getNumFeatures());
         //  System.out.println(Arrays.toString(clf.getOptions()));
-        Evaluation evaluation = new Evaluation(trainData);
+        /*Evaluation evaluation = new Evaluation(afs_train);
 
         try {
             dt.getInitialTime();
@@ -103,7 +97,7 @@ public class HoeffdingTreeExample {
 
         } catch (Exception e) {
             System.out.println("Can't evaluate the model!");
-        }
+        }*/
 
         
         
