@@ -98,5 +98,16 @@ public class FilesJ {
         String[] aux = file.split("/");
         return aux[aux.length - 1];
     }
+    
+    public String pathToTitle2(String file) {
+        String[] aux = file.split("/");
+        return aux[aux.length - 2];
+    }
+    
+    public String getPahtFile(String path, int i) throws IOException {
+        String aux = path + i + ".txt";
+        this.writeFile(aux, "");
+        return aux;
+    }
 
 }
