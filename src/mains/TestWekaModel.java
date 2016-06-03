@@ -6,12 +6,13 @@
 package mains;
 
 import models.Entity;
-import models.WekaAlgs;
 import preProcessingFiles.CreateArffFiles;
 import preProcessingFiles.CrossValidation;
 import preProcessingFiles.InvertedIndex;
 import utils.DateTime;
 import utils.FilesJ;
+import utils.Printer;
+import utils.Tables;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import org.xml.sax.SAXException;
 
 import config.FilesConfig;
+import evaluation.EvalAlgoritmo;
 
 
 /**
@@ -34,12 +36,20 @@ public class TestWekaModel {
         // TODO code application logic here
 
     	int numFolds = 10;
-        double[] metrics = new double[]{0,0};
-        double[] time = new double[]{0,0};
+        double[] metrics = new double[]{0,0}, time = new double[]{0,0}, finalMetrics = new double[8];
+        FilesJ fj = new FilesJ();
         
+        String  pathTestFile, pathPredictFile, pathResult, pathTable = FilesConfig.TABLES + "_", nameDataSet = fj.pathToTitle2(FilesConfig.IMPUT_CLASSIFIER);
+        StringBuilder tableMetricsTime = new StringBuilder(), tableChart = new StringBuilder();
+        tableMetricsTime.append("Fold\tt_Train\tt_Test\tMacro\t\t\tMicro \n\n");
+        tableChart.append("\nMacro; Micro; t_Train; t_Test; t_Total\n");
+        
+        CreateArffFiles caf;      
         
         DateTime dt = new DateTime();
         dt.getDate();
+        
+        
         //obtém os dados de treino e teste para cada fold
         dt.getInitialTime();
         CrossValidation cv = new CrossValidation();
@@ -47,9 +57,23 @@ public class TestWekaModel {
         dt.getEndTime();
         System.out.println("##### Tempo leitura Arquivos: " + dt.getStepTime());
 
-        CreateArffFiles caf;
+      
+        double sumTime = 0, totalTrain = 0, totalTest = 0, totalTrainTest = 0, totalNewClass = 0;
 
         for (int i = 0; i < numFolds; i++) {
+        	
+        	 /**
+             * Arquivos onde serão armazenados logs e arquivos para a avaliação
+             */
+            
+        	{
+                pathTestFile = fj.getPahtFile(FilesConfig.TEST_FILE, i);
+                pathPredictFile = fj.getPahtFile(FilesConfig.PREDICT_FILE, i);
+                pathResult = fj.getPahtFile(FilesConfig.FOLD_RESULT, i);              
+                
+            }
+        	
+        	
 
             System.out.println("-------------------Inicio Fold " + i + " -----------------------------");
             dt.initTimeFold();
@@ -81,22 +105,108 @@ public class TestWekaModel {
             /**********************************************************************************************************
              ********************************* Inserir aqui o modelo ************************************************** 
              **********************************************************************************************************/
-                       
+             //Antes do treino
+            dt.getStepTime();
+            
+            //Treino aqui
+            
+            
+            
+            
+            //Após o treino
+            tableMetricsTime.append(dt.getStepTime()).append("\t");
+            System.out.println("##### Tempo Treino: " + dt.getStepTime());
+            sumTime += dt.getStepTime();
+            totalTrain += dt.getStepTime();
+            
+            
+            //antes do teste
+            dt.getStepTime();       
+            
+
+            //teste aqui
+            
+            //Após o teste
+            dt.getEndTime();
+            tableMetricsTime.append(dt.getStepTime()).append("\t");
+            if (i == 0) {
+                //  pathTable += test2.getClass().getName() + "_" + nameDataSet;
+                //  fj.writeFile(pathTable, "");
+            }
+            System.out.println("##### Tempo Teste: " + dt.getStepTime());
+            sumTime += dt.getStepTime();
+            totalTest += dt.getStepTime();
+            
+            
+            
+            
+            
             
             /********************************************************************************************************** 
              ***********************************************************************************************************/
             
+            /* ******************************************************************
+             * Begin Evaluation
+             * ****************************************************************/
+            EvalAlgoritmo evA = new EvalAlgoritmo();
+            {
+                dt.getInitialTime();
+
+                evA.evaluationFold(pathTestFile, pathPredictFile, pathResult);
+
+                // cálculo das metricas gerais do experimento
+                {
+                    finalMetrics[0] += evA.getMdAcc();
+                    finalMetrics[1] += evA.getTxAcerto();
+                    finalMetrics[2] += evA.getMdPre();
+                    finalMetrics[3] += evA.getMdRe();
+                    finalMetrics[4] += evA.getMdF1();
+                    finalMetrics[5] += evA.getMicro();
+                    finalMetrics[6] += evA.getMacro();
+                    finalMetrics[7] += sumTime;
+                }
+
+                dt.getEndTime();
+                System.out.println(">>>>Tempo Avaliacao: " + dt.getStepTime());
+               // Printer.printMetrics(evA);
+                System.out.println(">>>>> Tempo Fold: " + dt.getTimeFold());
+                sumTime += dt.getStepTime();
+            }
+
+            /**
+             * Tabela de Resultados
+             */
+            {
+                tableMetricsTime.append(evA.getMacro()).append("\t");
+                tableMetricsTime.append(evA.getMicro()).append("\t");
+                fj.appendFile(pathTable, tableMetricsTime.toString());
+                tableMetricsTime = new StringBuilder();
+            }
             System.out.println("##### Tempo Fold:  " + (dt.getTimeFold()));
+            System.out.println("---------------------> Finished Fold " + i + "<----------------\n");
+           
         }
 
-        System.out.println("<>---------------------------------------------------<>");
-        System.out.println(" Media MicroF1: " + metrics[0] / 10);
-        System.out.println("Media MacroF1: " + metrics[1] / 10);
-        System.out.println("Media Tempo Treino: " + time[0] / 10);
-        System.out.println("Media Tempo Teste: " + time[1] / 10);
+        {
+//          finalMetrics[7] = dt.getEndTime();
+        	Printer.printerFinalResults(numFolds, finalMetrics);
+        	fj.appendFile(pathTable, "Avg Macro: " + finalMetrics[6] / numFolds);
+        	fj.appendFile(pathTable, "Avg Micro: " + finalMetrics[5] / numFolds);
+        	fj.appendFile(pathTable, "Total Time: " + finalMetrics[7]);
+        	fj.appendFile(pathTable, "Total Train: " + totalTrain);
+  			fj.appendFile(pathTable, "Total Test: " + totalTest + "\n");
 
-        System.out.println("##### Tempo Total: " + dt.getTotalTime());
-//        System.out.println(out.toString());
+  			{
+  				tableChart.append(100 * finalMetrics[6] / numFolds).append("; ");
+  				tableChart.append(100 * finalMetrics[5] / numFolds).append("; ");
+  				tableChart.append(totalTrain).append("; ");
+  				tableChart.append(totalTest).append("; ");
+  				tableChart.append(finalMetrics[7]).append("\n");
+
+  			}	
+
+  			Tables.saveMetricsTime(finalMetrics[6], finalMetrics[5], totalTrain, totalTest, (int) totalNewClass);
+        }
     }
 
 }
