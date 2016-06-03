@@ -5,37 +5,39 @@
  */
 package models;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
+
 /**
  *
  * @author joaoantoniosilva
  */
-public class Entity {
-    
+public class Entity implements Comparable<Entity> {
+
     private String realName;
     private String instanceID;
     private String description;
-    private String predictName;
+    private String finalPrediction, predictedSVM, predictedRules, predictSimNewClass;
     private String rules;
-    private String probSVM;
-    private String classSVM;
-    private double simJaccard;
-    private double simCosino;
-    
-    
-    
-    
+    private Set<String> setRulesClassChosen = new HashSet<>();
+    private double simProb, perFinalRule;
+
+  //  private Map<String, ArrayList<Prediction>> topSimilaritys;
+
+    private boolean findRules;
 
     public Entity() {
-        this.simJaccard = 0.0;
+        this.findRules = false;
+        //this.topSimilaritys = new HashMap<>();
     }
-    
-    
-    
 
-    public Entity(String entityRealName, String entityCode, String enityDescription) {
+    public Entity(String entityRealName, String entityCode, String entityDescription) {
         this.realName = entityRealName;
         this.instanceID = entityCode;
-        this.description = enityDescription;
+        this.description = entityDescription;
+   //     this.topSimilaritys = new HashMap<>();
     }
 
     public String getRealName() {
@@ -62,12 +64,12 @@ public class Entity {
         this.description = description;
     }
 
-    public String getPredictName() {
-        return predictName;
+    public String getFinalPrediction() {
+        return finalPrediction;
     }
 
-    public void setPredictName(String predictName) {
-        this.predictName = predictName;
+    public void setFinalPrediction(String finalPrediction) {
+        this.finalPrediction = finalPrediction;
     }
 
     public String getRules() {
@@ -78,41 +80,130 @@ public class Entity {
         this.rules = rules;
     }
 
-    public String getProbSVM() {
-        return probSVM;
+    public String getPredictedSVM() {
+        return predictedSVM;
     }
 
-    public void setProbSVM(String probSVM) {
-        this.probSVM = probSVM;
+    public void setPredictedSVM(String predictedSVM) {
+        this.predictedSVM = predictedSVM;
     }
 
-    public String getClassSVM() {
-        return classSVM;
+    public String getPredictedRules() {
+        return predictedRules;
     }
 
-    public void setClassSVM(String classSVM) {
-        this.classSVM = classSVM;
+    public void setPredictedRules(String predictedRules) {
+        this.predictedRules = predictedRules;
     }
 
-    public double getSimJaccard() {
-        return simJaccard;
+    public double getSimProb() {
+        return simProb;
     }
 
-    public void setSimJaccard(double simJaccard) {
-        this.simJaccard = simJaccard;
+    public void setSimProb(double simProb) {
+        this.simProb = simProb;
     }
 
-    public double getSimCosino() {
-        return simCosino;
+    public boolean isFindRules() {
+        return findRules;
     }
 
-    public void setSimCosino(double simCosino) {
-        this.simCosino = simCosino;
+    public void setFindRules(boolean findRules) {
+        this.findRules = findRules;
+    }
+
+	@Override
+	public int compareTo(Entity o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+    
+    /*
+    public ArrayList<Prediction> getTopSimilaritys(String key) {
+        return topSimilaritys.get(key);
+    }
+
+    public void addSimilaritys(String key, Prediction p) {
+        if (this.topSimilaritys.containsKey(key)) {
+            this.topSimilaritys.get(key).add(p);
+        } else {
+            ArrayList<Prediction> aux = new ArrayList<>();
+            aux.add(p);
+            this.topSimilaritys.put(key, aux);
+        }
+    }
+
+    public void addClassifier(String key, ArrayList<Prediction> p) {
+
+        if (this.topSimilaritys.containsKey(key)) {
+            this.topSimilaritys.get(key).addAll(p);
+        } else {
+            this.topSimilaritys.put(key, p);
+        }
+
+    }
+
+    public void clearPredicitons() {
+        this.topSimilaritys.clear();
+    }
+
+    public Map<String, ArrayList<Prediction>> getTopSimilaritys() {
+        return topSimilaritys;
+    }
+
+    public double getPerFinalRule() {
+        return perFinalRule;
+    }
+
+    public void setPerFinalRule(double perFinalRule) {
+        this.perFinalRule = perFinalRule;
+    }
+
+    public void cloneEntity(Entity entity) {
+        this.realName = entity.getRealName();
+        this.instanceID = entity.getInstanceID();
+        this.description = entity.getDescription();
+    }
+
+    public Set<String> getSetRulesClassChosen() {
+        return setRulesClassChosen;
+    }
+
+    public void setSetRulesClassChosen(Set<String> setRulesClassChosen) {
+        this.setRulesClassChosen = setRulesClassChosen;
+    }
+
+    @Override
+    public int compareTo(Entity o) {
+
+        if (this.simProb > o.getSimProb()) {
+            return 1;
+        }
+
+        if (this.simProb < o.getSimProb()) {
+            return -1;
+        }
+
+        long thisBits = Double.doubleToLongBits(this.simProb);
+        long anotherBits = Double.doubleToLongBits(o.getSimProb());
+
+        return (thisBits == anotherBits ? 0 : // Values are equal
+                (thisBits < anotherBits ? -1 : // (-0.0, 0.0) or (!NaN, NaN)
+                        1));
+
+    }
+
+    public String getPredictSimNewClass() {
+        return predictSimNewClass;
+    }
+
+    public void setPredictSimNewClass(String predictSimNewClass) {
+        this.predictSimNewClass = predictSimNewClass;
     }
     
     
+    */
     
-    
-    
-    
+
 }
