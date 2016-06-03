@@ -27,6 +27,8 @@ import weka.core.*;
 import weka.core.converters.ArffLoader.ArffReader;
 import weka.core.converters.Loader.StructureNotReadyException;
 import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Add;
+import weka.filters.unsupervised.attribute.AddValues;
 import weka.filters.unsupervised.attribute.Standardize;
 
 /**
@@ -50,12 +52,23 @@ public class IncrementalNayveBayes {
 
 		// Load data train
 		weka.core.converters.ArffLoader loader = new weka.core.converters.ArffLoader();
-		loader.setRetrieval(2);
-		loader.setFile(new File(pathTrain));
-		Instances structure = loader.getStructure();
-		structure.setClassIndex(structure.numAttributes() - 1);
-
-		// Instance and train the model
+		
+		//loader.setRetrieval(2);
+		loader.setFile(new File(pathTrain));		
+		//System.out.println(loader.getStructure().toString());
+		Instances structure = loader.getStructure();		
+		structure.setClassIndex(structure.numAttributes()-1);
+		
+		System.out.println(structure.attribute(structure.classIndex()));
+		
+        AddValues addv = new AddValues();
+        addv.setInputFormat(structure);
+        addv.setAttributeIndex(""+structure.classIndex()); // the class is the last attribute
+        addv.setLabels("1000000");
+    
+        structure = Filter.useFilter(structure,addv);
+        System.out.println(structure.attribute(structure.classIndex()));
+		
 		NaiveBayesUpdateable classifier = new NaiveBayesUpdateable();
 		try {
 			classifier.buildClassifier(structure);
@@ -80,7 +93,7 @@ public class IncrementalNayveBayes {
 			System.out.println("Training Time: " + dt.getStepTime());
 
 		} catch (Exception e) {
-			System.out.println("Can't create the classifier!");
+			System.out.println("Can't Training the classifier!");
 		}
 
 		// Load test data
@@ -109,7 +122,7 @@ public class IncrementalNayveBayes {
 			//	classifier.updateClassifier(current);
 				i++;
 			}
-
+			System.out.println("Number of hits: "+ numAcertos);
 			dt.getEndTime();
 			this.time[1] = dt.getStepTime();
 			System.out.println("Test Time: " + dt.getStepTime());
