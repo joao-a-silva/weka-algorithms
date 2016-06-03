@@ -7,7 +7,7 @@ import org.xml.sax.SAXException;
 
 import config.FilesConfig;
 import models.Entity;
-import models.HoeffdingTreeExample;
+import models.HoeffdingTreeModel;
 import preProcessingFiles.CreateArffFiles;
 import preProcessingFiles.CrossValidation;
 import preProcessingFiles.InvertedIndex;
@@ -73,9 +73,10 @@ public class TestHoeffdingTree {
             /**********************************************************************************************************
              ********************************* Inserir aqui o modelo ************************************************** 
              **********************************************************************************************************/
-            HoeffdingTreeExample hf = new HoeffdingTreeExample();
-
-            hf.HTClassifiers(FilesConfig.W_TRAIN + ".arff", FilesConfig.W_TEST + ".arff", invertedIndex.getNumTokens());
+            
+            HoeffdingTreeModel hft = new HoeffdingTreeModel();
+            hft.hftTrain(FilesConfig.W_TRAIN + ".arff");
+            hft.hftTest(FilesConfig.W_TEST + ".arff");
             
             /********************************************************************************************************** 
              ***********************************************************************************************************/
