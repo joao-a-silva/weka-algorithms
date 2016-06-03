@@ -6,6 +6,7 @@
 package mains;
 
 import models.Entity;
+import models.IncrementalNayveBayes;
 import preProcessingFiles.CreateArffFiles;
 import preProcessingFiles.CrossValidation;
 import preProcessingFiles.InvertedIndex;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import org.xml.sax.SAXException;
 
 import config.FilesConfig;
+import evaluation.CreateFilesEvaluation;
 import evaluation.EvalAlgoritmo;
 
 
@@ -27,19 +29,29 @@ import evaluation.EvalAlgoritmo;
  *
  * @author joao
  */
-public class TestWekaModel {
+public class ExpIncrementalNB {
 
     /**
      * @param args the command line arguments
      */
 	public static void main(String[] args) throws FileNotFoundException, IOException, SAXException, Exception {
         // TODO code application logic here
+		
 
-    	int numFolds = 10;
+       	int numFolds = 10;
         double[] metrics = new double[]{0,0}, time = new double[]{0,0}, finalMetrics = new double[8];
         FilesJ fj = new FilesJ();
         
-        String  pathTestFile, pathPredictFile, pathResult, pathTable = FilesConfig.TABLES + "_", nameDataSet = fj.pathToTitle2(FilesConfig.IMPUT_CLASSIFIER);
+        try {            
+            fj.cleanDir("files/evaluation/tablesMetricsTime", false);
+        } catch (Exception e) {
+            System.out.println("Error: Can't clean the directories.");
+        }
+		
+        
+        String  pathTestFile, pathPredictFile, pathResult, pathNewPredictFile, pathTable = FilesConfig.TABLES + "_", 
+        		nameDataSet = fj.pathToTitle2(FilesConfig.IMPUT_CLASSIFIER);
+        
         StringBuilder tableMetricsTime = new StringBuilder(), tableChart = new StringBuilder();
         tableMetricsTime.append("Fold\tt_Train\tt_Test\tMacro\t\t\tMicro \n\n");
         tableChart.append("\nMacro; Micro; t_Train; t_Test; t_Total\n");
@@ -69,10 +81,15 @@ public class TestWekaModel {
         	{
                 pathTestFile = fj.getPahtFile(FilesConfig.TEST_FILE, i);
                 pathPredictFile = fj.getPahtFile(FilesConfig.PREDICT_FILE, i);
-                pathResult = fj.getPahtFile(FilesConfig.FOLD_RESULT, i);              
+                //pathPredictFile = fj.getPahtFile(FilesConfig.PREDICT_NEW_FILE, i);
+                pathResult = fj.getPahtFile(FilesConfig.FOLD_RESULT, i); 
+                
                 
             }
         	
+        //	System.out.println(pathTestFile);
+        	//System.out.println(pathPredictFile);
+        	CreateFilesEvaluation createFiles = new CreateFilesEvaluation(pathTestFile, pathPredictFile);
         	
 
             System.out.println("-------------------Inicio Fold " + i + " -----------------------------");
@@ -109,7 +126,8 @@ public class TestWekaModel {
             dt.getStepTime();
             
             //Treino aqui
-            
+            IncrementalNayveBayes inb = new IncrementalNayveBayes();            
+            inb.classifier(FilesConfig.W_TRAIN+".arff", FilesConfig.W_TEST+".arff", createFiles);
             
             
             
@@ -130,8 +148,8 @@ public class TestWekaModel {
             dt.getEndTime();
             tableMetricsTime.append(dt.getStepTime()).append("\t");
             if (i == 0) {
-                //  pathTable += test2.getClass().getName() + "_" + nameDataSet;
-                //  fj.writeFile(pathTable, "");
+                  pathTable += inb.getClass().getName() + "_" + nameDataSet;
+                  fj.writeFile(pathTable, "");
             }
             System.out.println("##### Tempo Teste: " + dt.getStepTime());
             sumTime += dt.getStepTime();
@@ -168,7 +186,7 @@ public class TestWekaModel {
 
                 dt.getEndTime();
                 System.out.println(">>>>Tempo Avaliacao: " + dt.getStepTime());
-               // Printer.printMetrics(evA);
+                Printer.printMetrics(evA);
                 System.out.println(">>>>> Tempo Fold: " + dt.getTimeFold());
                 sumTime += dt.getStepTime();
             }
@@ -182,9 +200,9 @@ public class TestWekaModel {
                 fj.appendFile(pathTable, tableMetricsTime.toString());
                 tableMetricsTime = new StringBuilder();
             }
-            System.out.println("##### Tempo Fold:  " + (dt.getTimeFold()));
+            
             System.out.println("---------------------> Finished Fold " + i + "<----------------\n");
-           
+            System.out.println("##### Tempo Fold:  " + (dt.getTimeFold()));
         }
 
         {
