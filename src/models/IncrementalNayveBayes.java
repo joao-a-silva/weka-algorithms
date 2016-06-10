@@ -14,6 +14,7 @@ import java.util.Date;
 
 import com.yahoo.labs.samoa.instances.ArffLoader;
 
+import evaluation.CreateFilesEvaluation;
 import utils.DateTime;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
@@ -27,6 +28,8 @@ import weka.core.*;
 import weka.core.converters.ArffLoader.ArffReader;
 import weka.core.converters.Loader.StructureNotReadyException;
 import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Add;
+import weka.filters.unsupervised.attribute.AddValues;
 import weka.filters.unsupervised.attribute.Standardize;
 
 /**
@@ -42,7 +45,7 @@ public class IncrementalNayveBayes {
 		time = new double[2];
 	}
 
-	public void classifier(String pathTrain, String pathTest) throws IOException, Exception {
+	public void classifier(String pathTrain, String pathTest, CreateFilesEvaluation create) throws IOException, Exception {
 		DateTime dt = new DateTime();
 		BufferedReader br = null;
 
@@ -50,12 +53,23 @@ public class IncrementalNayveBayes {
 
 		// Load data train
 		weka.core.converters.ArffLoader loader = new weka.core.converters.ArffLoader();
-		loader.setRetrieval(2);
-		loader.setFile(new File(pathTrain));
-		Instances structure = loader.getStructure();
-		structure.setClassIndex(structure.numAttributes() - 1);
-
-		// Instance and train the model
+		
+		//loader.setRetrieval(2);
+		loader.setFile(new File(pathTrain));		
+		//System.out.println(loader.getStructure().toString());
+		Instances structure = loader.getStructure();		
+		structure.setClassIndex(structure.numAttributes()-1);
+		
+		System.out.println(structure.attribute(structure.classIndex()));
+		
+        /*AddValues addv = new AddValues();
+        addv.setInputFormat(structure);
+        addv.setAttributeIndex(""+structure.classIndex()); // the class is the last attribute
+        addv.setLabels("1000000");
+    
+        structure = Filter.useFilter(structure,addv);
+        System.out.println(structure.attribute(structure.classIndex()));*/
+		
 		NaiveBayesUpdateable classifier = new NaiveBayesUpdateable();
 		try {
 			classifier.buildClassifier(structure);
@@ -80,7 +94,7 @@ public class IncrementalNayveBayes {
 			System.out.println("Training Time: " + dt.getStepTime());
 
 		} catch (Exception e) {
-			System.out.println("Can't create the classifier!");
+			System.out.println("Can't Training the classifier!");
 		}
 
 		// Load test data
@@ -89,7 +103,7 @@ public class IncrementalNayveBayes {
 		loaderTest.setFile(new File(pathTest));
 
 		// test the data
-		try {
+	//	try {
 		
 			int numAcertos = 0;
 		
@@ -100,44 +114,47 @@ public class IncrementalNayveBayes {
 			while ((current = loaderTest.getNextInstance(structureTest)) != null) {
 				// System.out.println("Instance "+i);
 				
-				if(current.classValue() ==  classifier.classifyInstance(current)){
+				/*if(current.classValue() ==  classifier.classifyInstance(current)){
 					numAcertos++;
-				}
+				}*/
 				
+				Entity entity = new Entity();
+				entity.setRealName(current.classValue()+"");
+				entity.setFinalPrediction(classifier.classifyInstance(current)+"");
+				create.createFilesEvaluation(entity);
 				//System.out.println(current.classValue() + " -> " + classifier.classifyInstance(current) + " -> "
 					//	+ classifier.distributionForInstance(current)[(int) classifier.classifyInstance(current)]);
 			//	classifier.updateClassifier(current);
 				i++;
 			}
-
+			System.out.println("Number of hits: "+ numAcertos);
 			dt.getEndTime();
 			this.time[1] = dt.getStepTime();
 			System.out.println("Test Time: " + dt.getStepTime());
 
-		} catch (Exception e) {
-			System.out.println("Can't evaluate the model!");
-		}
+		//} catch (Exception e) {
+	//		System.out.println("Can't evaluate the model!");
+	//	}
 
-		// try {
-		// dt.getInitialTime();
-		// int i =0;
-		// while ((current = loaderTest.getNextInstance(structureT)) != null ) {
-		// System.out.println("Instance "+i);
-		// System.out.println(current.classValue()+" ->
-		// "+classifier.classifyInstance(current) +" -> "+
-		// classifier.distributionForInstance(current)[(int)
-		// classifier.classifyInstance(current)]);
-		// classifier.updateClassifier(current);
-		// i++;
-		// }
-		//
-		// dt.getEndTime();
-		// this.time[0] = dt.getStepTime();
-		// System.out.println("Test Time: "+ dt.getStepTime());
-		//
-		// } catch (Exception e) {
-		// System.out.println("Can't test the model!");
-		// }
+	/*	try {
+		 dt.getInitialTime();
+		 int i =0;
+		 while ((current = loaderTest.getNextInstance(structure)) != null ) {
+		 System.out.println("Instance "+i);
+		 System.out.println(current.classValue()+" -> "+classifier.classifyInstance(current) +" -> "+
+		 classifier.distributionForInstance(current)[(int)
+		 classifier.classifyInstance(current)]);
+		 classifier.updateClassifier(current);
+		 i++;
+		 }
+		
+		 dt.getEndTime();
+		 this.time[0] = dt.getStepTime();
+		 System.out.println("Test Time: "+ dt.getStepTime());
+		
+		 } catch (Exception e) {
+		 System.out.println("Can't test the model!");
+		 }*/
 
 	}
 

@@ -98,5 +98,40 @@ public class FilesJ {
         String[] aux = file.split("/");
         return aux[aux.length - 1];
     }
+    
+    public String pathToTitle2(String file) {
+        String[] aux = file.split("/");
+        return aux[aux.length - 2];
+    }
+    
+    public String getPahtFile(String path, int i) throws IOException {
+        String aux = path + i + ".txt";
+        this.writeFile(aux, "");
+        return aux;
+    }
+    
+    public void cleanDir(String path, boolean recursivly) throws FileNotFoundException {
+
+        File f = new File(path);
+
+        if (f.isDirectory()) {
+            File[] files = f.listFiles();
+
+            if (recursivly) {
+                for (File file : files) {
+                    cleanDir(file.getAbsolutePath(), recursivly);
+                }
+               
+            } else {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+
+        }else{
+             f.delete();
+        }
+
+    }
 
 }

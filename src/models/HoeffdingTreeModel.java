@@ -2,21 +2,14 @@ package models;
 
 import moa.classifiers.AbstractClassifier;
 import moa.classifiers.trees.HoeffdingTree;
+import moa.core.InstanceExample;
 import moa.streams.ArffFileStream;
-import weka.classifiers.evaluation.Evaluation;
-//import weka.core.Instances;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
 
-import com.yahoo.labs.samoa.instances.Instance;
-//import com.yahoo.labs.samoa.instances.Instances;
-
-import config.FilesConfig;
+import evaluation.CreateFilesEvaluation;
 import utils.DateTime;
+import weka.core.Utils;
 
 public class HoeffdingTreeModel {
 	
@@ -53,7 +46,7 @@ public class HoeffdingTreeModel {
         }
     }
     
-    public void hftTest(String pathTest) throws IOException, Exception {
+    public void hftTest(String pathTest, CreateFilesEvaluation create) throws IOException, Exception {
     	
         int classindex = -1;   //-1 -> last attribute in file
         DateTime dt = new DateTime();
@@ -64,8 +57,14 @@ public class HoeffdingTreeModel {
         hft.prepareForUse();
         try {
             dt.getInitialTime();
-            while(afs_test.hasMoreInstances()){
-            	hft.getVotesForInstance(afs_test.nextInstance());
+            InstanceExample instance = null;
+            while((instance = afs_test.nextInstance()) != null){
+            	//System.out.print(Utils.maxIndex(hft.getVotesForInstance(instance)));
+            	//System.out.println(" -> " + instance.getData().classValue() + "\n");
+            	Entity entity = new Entity();
+				entity.setRealName(instance.getData().classValue()+"");
+				entity.setFinalPrediction(Utils.maxIndex(hft.getVotesForInstance(instance))+"");
+				create.createFilesEvaluation(entity);
             }
             dt.getEndTime();
             System.out.println("Testing Time: "+ dt.getStepTime());
