@@ -1,15 +1,24 @@
 package mains;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.xml.sax.SAXException;
+
 import config.FilesConfig;
+import evaluation.CreateFilesEvaluation;
+import evaluation.EvalAlgoritmo;
 import models.Entity;
-import models.HoeffdingTreeExample;
+import models.HoeffdingTreeModel;
 import preProcessingFiles.CreateArffFiles;
 import preProcessingFiles.CrossValidation;
 import preProcessingFiles.InvertedIndex;
 
 import utils.DateTime;
+import utils.FilesJ;
+import utils.Printer;
+import utils.Tables;
 
 
 
@@ -17,76 +26,65 @@ import utils.DateTime;
 public class TestHoeffdingTree {
 
 	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+     * @param args the command line arguments
+     */
+	public static void main(String[] args) throws FileNotFoundException, IOException, SAXException, Exception {
+        // TODO code application logic here
 		
-		int numTrees = Integer.parseInt(args[2]);
-        int numLevesl = Integer.parseInt(args[3]);
+
+       	int numFolds = 10;
+        double[] metrics = new double[]{0,0}, time = new double[]{0,0}, finalMetrics = new double[8];
+        FilesJ fj = new FilesJ();
         
-        switch (args[1]) {
-            
-            case "-a":
-                main(new String[] {args[0],"-p", args[2], args[3]});
-                main(new String[] {args[0],"-e", args[2], args[3]});
-                main(new String[] {args[0],"-ne", args[2], args[3]});
-                main(new String[] {args[0],"-b", args[2], args[3]});
-                break;
-
-            case "-p":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/printers/17-Printers-Fold-";
-
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-
-            case "-e":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/comCodigo/10-Produtos_Com_Codigo-Fold-";
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-
-            case "-ne":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/semcodigo/14-Produtos-Sem-Codigos-Fold-";
-                if (!args[0].equals("-a")) {
-                    break;
-                }
-                
-                
-                case "-b":
-                FilesConfig.IMPUT_CLASSIFIER = "files/imput/books/15-Livros-Fold-";
-                if (!args[0].equals("-a")) {
-                    break;
-                }
+        try {            
+            fj.cleanDir("files/evaluation/tablesMetricsTime", false);
+        } catch (Exception e) {
+            System.out.println("Error: Can't clean the directories.");
         }
-
+		
         
+        String  pathTestFile, pathPredictFile, pathResult, pathNewPredictFile, pathTable = FilesConfig.TABLES + "_", 
+        		nameDataSet = fj.pathToTitle2(FilesConfig.IMPUT_CLASSIFIER);
         
-        int numFolds = 10;
-        double[] metrics = new double[2];
-        metrics[0] = 0.0;
-        metrics[1] = 0.0;
-
+        StringBuilder tableMetricsTime = new StringBuilder(), tableChart = new StringBuilder();
+        tableMetricsTime.append("Fold\tt_Train\tt_Test\tMacro\t\t\tMicro \n\n");
+        tableChart.append("\nMacro; Micro; t_Train; t_Test; t_Total\n");
+        
+        CreateArffFiles caf;      
+        
         DateTime dt = new DateTime();
         dt.getDate();
-
-        dt.getInitialTime();
-       // PreProcessingFiles ppf = new PreProcessingFiles();
-
+        
+        
         //obtém os dados de treino e teste para cada fold
+        dt.getInitialTime();
         CrossValidation cv = new CrossValidation();
-
-        for (int i = 0; i < numFolds; i++) {
-            System.out.println("Carregando Arquivos Fold " + i);
-            cv.readFiles(FilesConfig.IMPUT_CLASSIFIER, i + 1);
-        }
-
+        cv.readFiles(FilesConfig.IMPUT_CLASSIFIER, 10);
         dt.getEndTime();
         System.out.println("##### Tempo leitura Arquivos: " + dt.getStepTime());
 
-        CreateArffFiles caf;
+      
+        double sumTime = 0, totalTrain = 0, totalTest = 0, totalTrainTest = 0, totalNewClass = 0;
 
         for (int i = 0; i < numFolds; i++) {
+        	
+        	 /**
+             * Arquivos onde serão armazenados logs e arquivos para a avaliação
+             */
+            
+        	{
+                pathTestFile = fj.getPahtFile(FilesConfig.TEST_FILE, i);
+                pathPredictFile = fj.getPahtFile(FilesConfig.PREDICT_FILE, i);
+                //pathPredictFile = fj.getPahtFile(FilesConfig.PREDICT_NEW_FILE, i);
+                pathResult = fj.getPahtFile(FilesConfig.FOLD_RESULT, i); 
+                
+                
+            }
+        	
+        //	System.out.println(pathTestFile);
+        	//System.out.println(pathPredictFile);
+        	CreateFilesEvaluation createFiles = new CreateFilesEvaluation(pathTestFile, pathPredictFile);
+        	
 
             System.out.println("-------------------Inicio Fold " + i + " -----------------------------");
             dt.initTimeFold();
@@ -98,48 +96,123 @@ public class TestHoeffdingTree {
             ArrayList<Entity> dataTest = (ArrayList<Entity>) cv.getTest(i);
             System.out.println("Intancias Teste: " + dataTest.size());
 
-            // Gera o modelo de treino com o SVM
+            // Indexa o treino para salvar o arquivo .arff
             dt.getInitialTime();
-            InvertedIndex cj = new InvertedIndex();
-            cj.insertInvertedFile(dataTrain);
-//            cj.insertInvertedFile(test);
-            cj.atualizaHashIdf();
+            InvertedIndex invertedIndex = new InvertedIndex();
+            invertedIndex.insertInvertedFile(dataTrain);
+            invertedIndex.atualizaHashIdf();
+            dt.getEndTime();
+            System.out.println("Tempo Indexação: " + dt.getStepTime());
 
-            caf = new CreateArffFiles(cj);
-
+            // Cria os arquivos de treino e teste para o fold i     
+            dt.getInitialTime();
+            caf = new CreateArffFiles(invertedIndex);
             caf.criarArquivoArff(dataTrain, 0, FilesConfig.W_TRAIN, true);
             caf.criarArquivoArff(dataTest, 0, FilesConfig.W_TEST, false);
-
-            HoeffdingTreeExample hf = new HoeffdingTreeExample(numTrees);
-
-            hf.HTClassifiers(FilesConfig.W_TRAIN + ".arff", FilesConfig.W_TEST + ".arff", cj.getNumTokens(), numLevesl);
-
-            metrics[0] += hf.getMetrics()[0];
-            metrics[1] += hf.getMetrics()[1];
-
-//            svm.trainLibLinear(FilesConfig.SVM_TREINO+i+".arff");
             dt.getEndTime();
+            System.out.println("Tempo criação arquivos weka: " + dt.getStepTime());
             
-            System.out.println("##### Tempo Treinamento RF:  " + dt.getStepTime());
-            dt.getTimeFold();
+            
+            /**********************************************************************************************************
+             ********************************* Inserir aqui o modelo ************************************************** 
+             **********************************************************************************************************/
+            
+            HoeffdingTreeModel hft = new HoeffdingTreeModel();
+            
+            //Antes do treino
+            dt.getStepTime();
+            
+            //Treino aqui
+            hft.hftTrain(FilesConfig.W_TRAIN + ".arff");
+            
+            //Após o treino
+            tableMetricsTime.append(dt.getStepTime()).append("\t");
+            System.out.println("##### Tempo Treino: " + dt.getStepTime());
+            sumTime += dt.getStepTime();
+            totalTrain += dt.getStepTime();
+            
+            //antes do teste
+            dt.getStepTime();       
 
- 
+            //teste aqui
+            hft.hftTest(FilesConfig.W_TEST + ".arff", createFiles);
+            
+            //Após o teste
+            dt.getEndTime();
+            tableMetricsTime.append(dt.getStepTime()).append("\t");
+            if (i == 0) {
+                  pathTable += hft.getClass().getName() + "_" + nameDataSet;
+                  fj.writeFile(pathTable, "");
+            }
+            System.out.println("##### Tempo Teste: " + dt.getStepTime());
+            sumTime += dt.getStepTime();
+            totalTest += dt.getStepTime();  
+            
+            
+            /********************************************************************************************************** 
+             ***********************************************************************************************************/
+            
+            /* ******************************************************************
+             * Begin Evaluation
+             * ****************************************************************/
+            EvalAlgoritmo evA = new EvalAlgoritmo();
+            {
+                dt.getInitialTime();
 
+                evA.evaluationFold(pathTestFile, pathPredictFile, pathResult);
+
+                // cálculo das metricas gerais do experimento
+                {
+                    finalMetrics[0] += evA.getMdAcc();
+                    finalMetrics[1] += evA.getTxAcerto();
+                    finalMetrics[2] += evA.getMdPre();
+                    finalMetrics[3] += evA.getMdRe();
+                    finalMetrics[4] += evA.getMdF1();
+                    finalMetrics[5] += evA.getMicro();
+                    finalMetrics[6] += evA.getMacro();
+                    finalMetrics[7] += sumTime;
+                }
+
+                dt.getEndTime();
+                System.out.println(">>>>Tempo Avaliacao: " + dt.getStepTime());
+                Printer.printMetrics(evA);
+                System.out.println(">>>>> Tempo Fold: " + dt.getTimeFold());
+                sumTime += dt.getStepTime();
+            }
+
+            /**
+             * Tabela de Resultados
+             */
+            {
+                tableMetricsTime.append(evA.getMacro()).append("\t");
+                tableMetricsTime.append(evA.getMicro()).append("\t");
+                fj.appendFile(pathTable, tableMetricsTime.toString());
+                tableMetricsTime = new StringBuilder();
+            }
+            
+            System.out.println("---------------------> Finished Fold " + i + "<----------------\n");
+            System.out.println("##### Tempo Fold:  " + (dt.getTimeFold()));
         }
 
-        System.out.println("<>---------------------------------------------------<>");
-        System.out.println("MicroF1: " + metrics[0] / 10);
-        System.out.println("MacroF1: " + metrics[1] / 10);
+        {
+//          finalMetrics[7] = dt.getEndTime();
+        	Printer.printerFinalResults(numFolds, finalMetrics);
+        	fj.appendFile(pathTable, "Avg Macro: " + finalMetrics[6] / numFolds);
+        	fj.appendFile(pathTable, "Avg Micro: " + finalMetrics[5] / numFolds);
+        	fj.appendFile(pathTable, "Total Time: " + finalMetrics[7]);
+        	fj.appendFile(pathTable, "Total Train: " + totalTrain);
+  			fj.appendFile(pathTable, "Total Test: " + totalTest + "\n");
 
-        System.out.println("##### Tempo Total: " + dt.getTotalTime());
-        
-        
-        FilesJ fj = new FilesJ();       
-        fj.appendFile("files/evaluation/weka/metricsTime", metrics[0]/10+", "+metrics[1]/10+", "+ dt.getTotalTime()+"\n");
-        
-        
+  			{
+  				tableChart.append(100 * finalMetrics[6] / numFolds).append("; ");
+  				tableChart.append(100 * finalMetrics[5] / numFolds).append("; ");
+  				tableChart.append(totalTrain).append("; ");
+  				tableChart.append(totalTest).append("; ");
+  				tableChart.append(finalMetrics[7]).append("\n");
 
-//        System.out.println(out.toString());
-	}
+  			}	
 
+  			Tables.saveMetricsTime(finalMetrics[6], finalMetrics[5], totalTrain, totalTest, (int) totalNewClass);
+        }
+    }
 }
