@@ -1,3 +1,5 @@
-files/librarys
-bin/
-src/config
+files/librarys/**
+bin/**
+files/evaluation/**/*
+files/datasets/weka/*
+files/uolNonEletronic/*
