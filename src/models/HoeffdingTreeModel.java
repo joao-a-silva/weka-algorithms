@@ -58,12 +58,14 @@ public class HoeffdingTreeModel {
         try {
             dt.getInitialTime();
             InstanceExample instance = null;
-            while((instance = afs_test.nextInstance()) != null){
+            while(afs_test.hasMoreInstances()){
             	//System.out.print(Utils.maxIndex(hft.getVotesForInstance(instance)));
             	//System.out.println(" -> " + instance.getData().classValue() + "\n");
+            	instance = afs_test.nextInstance();
             	Entity entity = new Entity();
 				entity.setRealName(instance.getData().classValue()+"");
-				entity.setFinalPrediction(Utils.maxIndex(hft.getVotesForInstance(instance))+"");
+				entity.setFinalPrediction((double)Utils.maxIndex(hft.getVotesForInstance(instance))+"");
+				entity.setDescription(instance + "");
 				create.createFilesEvaluation(entity);
             }
             dt.getEndTime();
