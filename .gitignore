@@ -1,5 +1,8 @@
 files/librarys/**
 bin/**
-files/evaluation/**/*
+files/evaluation/newClass/predict/*
+files/evaluation/newClass/test/*
+files/evaluation/newClass/resultsFold/*
+files/evaluation/tablesMetricsTime/*
 files/datasets/weka/*
-files/uolNonEletronic/*
+files/datasets/uolNonEletronic/*
