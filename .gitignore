@@ -2,7 +2,7 @@ files/librarys/**
 bin/**
 files/evaluation/newClass/predict/
 files/evaluation/newClass/test/
-files/evaluation/newClass/resultsFold/
+files/evaluation/newClass/resultFold/
 files/evaluation/tablesMetricsTime/
 files/datasets/weka/
 files/datasets/uolNonEletronic/
