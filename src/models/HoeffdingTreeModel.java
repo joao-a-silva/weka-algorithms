@@ -1,8 +1,10 @@
 package models;
 
 import moa.classifiers.AbstractClassifier;
+import moa.classifiers.core.attributeclassobservers.NumericAttributeClassObserver;
 import moa.classifiers.trees.HoeffdingTree;
 import moa.core.InstanceExample;
+import moa.options.ClassOption;
 import moa.streams.ArffFileStream;
 
 import java.io.IOException;
@@ -33,6 +35,14 @@ public class HoeffdingTreeModel {
         ArffFileStream afs_train = new ArffFileStream(pathTrain, classindex);
         afs_train.prepareForUse();
         hft.setModelContext(afs_train.getHeader());
+        ClassOption option = new ClassOption("numericEstimator",
+                'n', "Numeric estimator to use.", NumericAttributeClassObserver.class,
+                "VFMLNumericAttributeClassObserver");
+        //options.setValueViaCLIString("-n BinaryTreeNumericAttributeClassObserver");
+        hft.getOptions().removeOption("numericEstimator");
+        hft.getOptions().addOption(option);
+        //System.out.println("-----------Options----------");
+        //System.out.println(hft.getOptions().getOption("numericEstimator").getValueAsCLIString());
         hft.prepareForUse();
         try {
             dt.getInitialTime();
