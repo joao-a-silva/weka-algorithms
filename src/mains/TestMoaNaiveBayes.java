@@ -140,11 +140,6 @@ public class TestMoaNaiveBayes {
             sumTime += dt.getStepTime();
             totalTest += dt.getStepTime();
             
-            
-            
-            
-            
-            
             /********************************************************************************************************** 
              ***********************************************************************************************************/
             
@@ -171,7 +166,7 @@ public class TestMoaNaiveBayes {
 
                 dt.getEndTime();
                 System.out.println(">>>>Tempo Avaliacao: " + dt.getStepTime());
-               // Printer.printMetrics(evA);
+                Printer.printMetrics(evA);
                 System.out.println(">>>>> Tempo Fold: " + dt.getTimeFold());
                 sumTime += dt.getStepTime();
             }
